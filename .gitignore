@@ -1,0 +1,52 @@
+# Ignore build output
+bin/
+obj/
+
+# Ignore NuGet packages
+*.nupkg
+packages/
+
+# Ignore Visual Studio files
+*.suo
+*.user
+*.sln.docstates
+*.vs/
+*.vscode/
+
+# Ignore Resharper files
+_ReSharper*/
+*.resharper*
+*.DotSettings.user
+
+# Ignore build artifacts
+*.dll
+*.exe
+*.pdb
+*.cache
+*.log
+*.swp
+*.tmp
+*.zip
+*.rar
+*.7z
+*.bak
+*.bak.*
+*.bak_*
+*.old
+*.old.*
+*.old_*
+*.tmp.*
+*.tmp_*
+*.temp
+*.temp.*
+*.temp_*
+
+# Ignore test results
+TestResults/
+
+# Ignore publish profiles
+*.pubxml
+*.publishproj
+
+# Ignore Visual Studio Code files
+.vscode/
