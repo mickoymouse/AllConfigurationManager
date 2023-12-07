@@ -92,7 +92,14 @@ namespace AllConfigurationManager
                 throw new Exception("Configurations was not specified in the configuration file.");
             }
 
-            Configurations = JsonConvert.DeserializeObject<Dictionary<string, string>>(ConfigurationData["Configurations"][CurrentEnvironment].ToString());
+            try
+            {
+                Configurations = JsonConvert.DeserializeObject<Dictionary<string, string>>(ConfigurationData["Configurations"][CurrentEnvironment].ToString());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"There was an issue trying to read configuration for {CurrentEnvironment} environment. Please check your config file.", ex);
+            }
         }
 
         #endregion
