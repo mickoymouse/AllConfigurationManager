@@ -1,5 +1,4 @@
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace AllConfigurationManager
 {
@@ -15,12 +14,17 @@ namespace AllConfigurationManager
 
         public void LoadConfiguration(string filePath)
         {
+            // TODO: Add support for XML
+            // TODO: Add support for Global Configuration
             string FileExtension = Path.GetExtension(filePath).ToLower();
 
             switch (FileExtension)
             {
                 case ".json":
                     _loadJsonConfiguration(filePath);
+                    break;
+                case ".yml":
+                    _loadYamlConfiguration(filePath);
                     break;
                 default:
                     throw new NotSupportedException($"File type {FileExtension} is not supported.");
@@ -44,6 +48,7 @@ namespace AllConfigurationManager
                 return (T)Convert.ChangeType(Configurations[key], typeof(T));
             }
 
+            // TODO: Fix exception message
             throw new KeyNotFoundException($"Configuration key {key} `found in the '{CurrentEnvironment}' environment.");
         }
 
@@ -100,6 +105,67 @@ namespace AllConfigurationManager
             {
                 throw new Exception($"There was an issue trying to read configuration for {CurrentEnvironment} environment. Please check your config file.", ex);
             }
+        }
+
+        private void _loadYamlConfiguration(string filePath)
+        {
+            string YamlString = File.ReadAllText(filePath);
+
+            string[] lines = YamlString.Split('\n');
+
+            Dictionary<string, string> YamlConf = new();
+
+
+            bool isFirstLine = true;
+            bool isConfigurationFound = false;
+            bool isCurrentConfigurationFound = false;
+
+            foreach (string Line in lines)
+            {
+                if (string.IsNullOrWhiteSpace(Line.Trim())) continue;
+
+                string[] LineTokens = Line.Split(":");
+                if (!(LineTokens.Length == 2)) continue;
+
+                string Key = LineTokens[0].Trim();
+                string Value = LineTokens[1].Trim();
+
+                int Diff = Line.Length - Line.TrimStart().Length;
+
+                if (isFirstLine)
+                {
+                    if (!LineTokens[0].Trim().Equals("Environment"))
+                    {
+                        throw new Exception("Environment was not specified in the configuration file.");
+                    }
+                    isFirstLine = false;
+                    CurrentEnvironment = LineTokens[1].Trim();
+                    continue;
+                }
+
+                if (isConfigurationFound == false && Key.Equals("Configurations"))
+                {
+                    isConfigurationFound = true;
+                    continue;
+                }
+
+                if (isConfigurationFound)
+                {
+                    if (Key.Equals(CurrentEnvironment))
+                    {
+                        isCurrentConfigurationFound = true;
+                        continue;
+                    }
+                }
+
+                if (isConfigurationFound && isCurrentConfigurationFound)
+                {
+                    if (Diff == 2) break;
+
+                    YamlConf[Key] = Value;
+                }
+            }
+            Configurations = YamlConf;
         }
 
         #endregion
