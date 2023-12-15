@@ -16,7 +16,7 @@ namespace AllConfigurationManager
         {
             // TODO: Add support for XML
             // TODO: Add support for Global Configuration
-            string FileExtension = Path.GetExtension(filePath).ToLower();
+            string FileExtension = Path.GetExtension(filePath);
 
             switch (FileExtension)
             {
@@ -48,7 +48,6 @@ namespace AllConfigurationManager
                 return (T)Convert.ChangeType(Configurations[key], typeof(T));
             }
 
-            // TODO: Fix exception message
             throw new KeyNotFoundException($"Configuration key '{key}' was not found in the '{CurrentEnvironment}' environment.");
         }
 
