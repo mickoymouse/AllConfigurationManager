@@ -1,5 +1,3 @@
-using AllConfigurationManager;
-
 namespace ConfigurationManagerTests
 {
     public class JsonTests
