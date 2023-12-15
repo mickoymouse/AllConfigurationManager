@@ -1,0 +1,15 @@
+{
+  "Configuration": {
+    "Dev": {
+      "SomeKey": "dev-value",
+      "MoreKey": "this is only in dev."
+    },
+    "QA": {
+      "SomeKey": "qa-value"
+    },
+    "Prod": {
+      "SomeKey": "prod-value"
+    }
+  },
+  "Environment": "Dev"
+}

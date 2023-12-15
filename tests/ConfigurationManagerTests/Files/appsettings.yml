@@ -1,0 +1,9 @@
+Environment: Dev
+Configurations:
+  Dev:
+    SomeKey: dev-value
+    MoreKey: dev-value
+  QA:
+    SomeKey: qa-value
+  Prod:
+    SomeKey: prod-value
