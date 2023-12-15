@@ -49,7 +49,7 @@ namespace AllConfigurationManager
             }
 
             // TODO: Fix exception message
-            throw new KeyNotFoundException($"Configuration key {key} `found in the '{CurrentEnvironment}' environment.");
+            throw new KeyNotFoundException($"Configuration key '{key}' was not found in the '{CurrentEnvironment}' environment.");
         }
 
         public IEnumerable<string> GetCurrentConfigurationKeys()
